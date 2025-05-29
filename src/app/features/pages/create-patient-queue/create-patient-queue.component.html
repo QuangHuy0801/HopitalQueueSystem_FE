@@ -1,0 +1,13 @@
+<div>
+  <label>Chọn bệnh nhân:</label>
+  <select [(ngModel)]="selectedPatientId">
+    <option *ngFor="let p of patients" [value]="p.id">{{ p.fullName }}</option>
+  </select>
+
+  <label>Chọn phòng:</label>
+  <select [(ngModel)]="selectedRoomId">
+    <option *ngFor="let r of rooms" [value]="r.id">{{ r.roomName }}</option>
+  </select>
+
+  <button (click)="submit()">Lấy số</button>
+</div>
