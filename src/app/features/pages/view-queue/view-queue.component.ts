@@ -1,60 +1,25 @@
-import { Component } from '@angular/core';
-import { QueueFormData } from '../../models/patient-queue.model';
-import { NgForm } from '@angular/forms';
-import { PatientQueueService } from '../../services/patient-queue.service';
+import { Component, OnInit } from '@angular/core';
+import { ViewQueueService } from '../../services/view-queue.service';
+import { Room } from '../../models/room.model';
 
 @Component({
   selector: 'app-view-queue',
   templateUrl: './view-queue.component.html',
   styleUrls: ['./view-queue.component.scss']
 })
-export class ViewQueueComponent {
-  formData: QueueFormData = {
-    fullName: '',
-    phone: '',
-    dob: new Date(),
-    cccd: '',
-    hasInsurance: false
-  };
+export class ViewQueueComponent implements OnInit {
+  roomList: Room[] = [];
 
-  result: any = null;
-  loading = false;
-  errorMessage = '';
+  constructor(private viewQueueService: ViewQueueService) { }
 
-  constructor(private patientQueueService: PatientQueueService) {}
-
-  handleSubmit(form: NgForm) {
-    if (form.invalid) {
-      return;
-    }
-    this.loading = true;
-    this.errorMessage = '';
-
-    // Gửi dữ liệu xuống backend qua service
-    this.patientQueueService.submitQueue(this.formData).subscribe({
-      next: (res) => {
-        this.result = res;
-        this.loading = false;
-        form.resetForm();
+ ngOnInit(): void {
+    this.viewQueueService.getRooms().subscribe({
+      next: (data) => {
+        this.roomList = data;
       },
       error: (err) => {
-        this.errorMessage = 'Có lỗi xảy ra, vui lòng thử lại!';
-        this.loading = false;
+        console.error('Error loading rooms:', err);
       }
     });
   }
-  getFormattedQueueNumber(): string {
-  if (!this.result) return '';
-  const room = this.result.roomId.toString().padStart(2, '0');
-  let queue = this.result.queueNumber;
-
-  if (queue > 9999) {
-    queue = 1;
-  }
-
-  const formattedQueue = queue.toString().padStart(4, '0');
-  return `${room}-${formattedQueue}`;
 }
-
-}
-

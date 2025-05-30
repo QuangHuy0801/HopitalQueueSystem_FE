@@ -1,13 +1,88 @@
-<div>
-  <label>Chọn bệnh nhân:</label>
-  <select [(ngModel)]="selectedPatientId">
-    <option *ngFor="let p of patients" [value]="p.id">{{ p.fullName }}</option>
-  </select>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Queue Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ng-zorro-antd@17.3.0/ng-zorro-antd.min.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <nz-card class="max-w-2xl w-full shadow-xl rounded-xl p-8 bg-white">
+    <h1 class="text-3xl font-bold text-center mb-8 text-blue-700">Lấy Số Thứ Tự Khám Bệnh</h1>
 
-  <label>Chọn phòng:</label>
-  <select [(ngModel)]="selectedRoomId">
-    <option *ngFor="let r of rooms" [value]="r.id">{{ r.roomName }}</option>
-  </select>
+    <form (ngSubmit)="handleSubmit(form)" #form="ngForm" class="space-y-6">
+      <!-- Full Name -->
+      <nz-form-item class="flex flex-col sm:flex-row sm:items-center gap-4">
+        <label class="w-full sm:w-40 text-right font-semibold text-gray-700">Họ và tên:</label>
+        <nz-form-control class="flex-1">
+          <input nz-input placeholder="VD: Nguyễn Văn A" [(ngModel)]="formData.fullName" name="fullName" required 
+                 class="border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" />
+        </nz-form-control>
+      </nz-form-item>
 
-  <button (click)="submit()">Lấy số</button>
-</div>
+       <!-- Citizen ID -->
+      <nz-form-item class="flex flex-col sm:flex-row sm:items-center gap-4">
+        <label class="w-full sm:w-40 text-right font-semibold text-gray-700">Căn cước công dân:</label>
+        <nz-form-control class="flex-1">
+          <input nz-input placeholder="VD: 012345678901" [(ngModel)]="formData.cccd" name="cccd" required 
+                 class="border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <!-- Date of Birth -->
+      <nz-form-item class="flex flex-col sm:flex-row sm:items-center gap-4">
+        <label class="w-full sm:w-40 text-right font-semibold text-gray-700">Ngày sinh:</label>
+        <nz-form-control class="flex-1">
+          <input nz-input type="date" [(ngModel)]="formData.dob" name="dob" required 
+           class="border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" />
+        </nz-form-control>
+      </nz-form-item>
+      
+
+      <!-- Phone Number -->
+      <nz-form-item class="flex flex-col sm:flex-row sm:items-center gap-4">
+        <label class="w-full sm:w-40 text-right font-semibold text-gray-700">Số điện thoại:</label>
+        <nz-form-control class="flex-1">
+          <input nz-input placeholder="VD: 0912345678" [(ngModel)]="formData.phone" name="phone" required 
+                 class="border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 transition" />
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <!-- Insurance -->
+      <nz-form-item class="flex flex-col sm:flex-row sm:items-center gap-4">
+        <label class="w-full sm:w-40 text-right font-semibold text-gray-700">Bảo hiểm y tế:</label>
+        <nz-form-control>
+          <label nz-checkbox [(ngModel)]="formData.hasInsurance" name="hasInsurance" class="text-gray-700"></label>
+        </nz-form-control>
+      </nz-form-item>
+
+
+      <!-- Submit Button -->
+      <button nz-button nzType="primary" class="w-full mt-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+        Lấy số thứ tự
+      </button>
+    </form>
+
+    <!-- Result Display -->
+    <!-- <div *ngIf="result" class="mt-8 p-6 bg-green-50 border border-green-200 rounded-lg text-center">
+      <p class="text-lg">
+        Số thứ tự của bạn là:
+        <span class="font-bold text-2xl text-green-600">{{ getFormattedQueueNumber() }}</span>
+      </p>
+    </div> -->
+ <div *ngIf="result" class="hidden">
+      <div id="printSection">
+        <p>Bệnh viện Đa khoa Đồng Nai</p>
+        <h1><strong>Phiếu Số Thứ Tự: {{ getFormattedQueueNumber() }}</strong></h1>
+        <p>Ngày: {{ getCurrentDateTime() }}</p>
+      </div>
+    </div>
+
+  </nz-card>
+
+  <script src="https://cdn.jsdelivr.net/npm/@angular/core@17.3.0/bundles/core.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ng-zorro-antd@17.3.0/ng-zorro-antd.min.js"></script>
+</body>
+</html>

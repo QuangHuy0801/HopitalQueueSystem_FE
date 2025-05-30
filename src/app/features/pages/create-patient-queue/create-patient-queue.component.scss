@@ -1,0 +1,23 @@
+@media print {
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #printSection {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    text-align: center;
+  }
+
+  #printSection h1 {
+    margin: 0.5em 0;
+  }
+
+  body *:not(#printSection):not(#printSection *) {
+    display: none !important;
+  }
+}

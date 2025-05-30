@@ -6,16 +6,15 @@ import { Patient } from '../models/patient.model';
 import { Room } from '../models/room.model';
 
 @Injectable({ providedIn: 'root' })
-export class PatientQueueService {
-  private baseUrl = 'http://localhost:5000/api/PatientQueue/take-number';
+export class ViewQueueService {
+  private baseUrl = 'http://localhost:5000/api/ViewQueue';
 
   constructor(private http: HttpClient) {}
-
-  submitQueue(data: QueueFormData): Observable<any> {
-    return this.http.post<any>(this.baseUrl, data);
+  getRooms(): Observable<Room[]> {
+    return this.http.get<Room[]>(`${this.baseUrl}/rooms`);
   }
-
-  getPatients(): Observable<Patient[]> {
-    return this.http.get<Patient[]>(`${this.baseUrl}/patients`);
-  }
+  getRoomById(id: number): Observable<Room> {
+  return this.http.get<Room>(`${this.baseUrl}/room/${id}`);
+}
+  
 }
