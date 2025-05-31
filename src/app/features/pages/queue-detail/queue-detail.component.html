@@ -1,19 +1,19 @@
 <nz-card class="max-w-5xl w-full shadow-lg rounded-xl p-8 bg-white mx-auto mt-10">
-  <h2 class="text-3xl font-bold mb-8 text-center text-blue-800">Thông Tin Quầy {{ counterId }}</h2>
+  <h2 class="text-3xl font-bold mb-8 text-center text-blue-800">Thông Tin Quầy {{ roomData.roomName }}</h2>
 
   <div class="queue-details text-center space-y-6 animate-fade-in">
     <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
       <p class="text-2xl">
         <span class="font-semibold">Đang khám:</span>
-        <span class="text-green-600 font-bold text-3xl">A{{ currentQueue }}</span>
+        <span class="text-green-600 font-bold text-3xl">{{ formattedCurrentQueue() }}</span>
       </p>
     </div>
 
     <div class="bg-gray-100 p-4 rounded-md shadow-sm mt-6">
       <p class="text-xl font-semibold mb-2">Danh sách tiếp theo:</p>
-      <ul class="text-lg space-y-1">
-        <li *ngFor="let item of upcomingQueues">A{{ item }}</li>
-      </ul>
+<ul class="text-lg space-y-1">
+  <li *ngFor="let item of formattedUpcomingQueues()">{{ item }}</li>
+</ul>
     </div>
 
     <button nz-button nzType="default" routerLink="/view" class="mt-4">

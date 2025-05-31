@@ -15,6 +15,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { CallQueueComponent } from './pages/call-queue/call-queue.component';
 import { QueueDetailComponent } from './pages/queue-detail/queue-detail.component';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { QueueDetailComponent } from './pages/queue-detail/queue-detail.componen
     NzInputModule,
     NzSelectModule,
     NzButtonModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzNotificationModule,
   ]
 })
 export class PatientQueueModule {}

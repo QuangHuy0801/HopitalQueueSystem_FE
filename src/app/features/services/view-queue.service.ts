@@ -15,6 +15,12 @@ export class ViewQueueService {
   }
   getRoomById(id: number): Observable<Room> {
   return this.http.get<Room>(`${this.baseUrl}/room/${id}`);
-}
+  }
+  updateNextQueueByRoomId(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/next/${id}`, {});
+  }
+  getQueueByIdRoom(id: number): Observable<PatientQueue[]> {
+    return this.http.get<PatientQueue[]>(`${this.baseUrl}/queue/${id}`);
+  }
   
 }
